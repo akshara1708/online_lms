@@ -1,0 +1,175 @@
+SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT;
+SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS;
+SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION;
+SET NAMES utf8;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE=NO_AUTO_VALUE_ON_ZERO */;
+
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `lms`;
+USE `lms`;
+CREATE TABLE `admin` (
+  `compid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`compid`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=latin1;
+INSERT INTO `admin` (`compid`,`password`) VALUES 
+ (101,'admin'),
+ (102,'admin');
+CREATE TABLE `admin_notification` (
+  `CompID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ApplicantName` varchar(45) NOT NULL,
+  `DeptID` int(20) unsigned NOT NULL,
+  `DeptName` varchar(45) NOT NULL,
+  `emailid` varchar(45) NOT NULL,
+  `ContactNo` int(20) unsigned NOT NULL,
+  `LeaveID` int(20) unsigned NOT NULL,
+  `LeaveType` varchar(45) NOT NULL,
+  `NoOfDays` int(10) unsigned NOT NULL,
+  `Reason` varchar(200) NOT NULL,
+  `ExtraWorkingHours` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`CompID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `applicant` (
+  `CompID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Name` varchar(45) NOT NULL,
+  `Designation` varchar(45) NOT NULL,
+  `DeptiD` varchar(45) NOT NULL,
+  `LeaveID` varchar(45) NOT NULL,
+  `ProjectID` varchar(45) NOT NULL,
+  `ContactNo` int(20) unsigned NOT NULL,
+  `Address` varchar(45) NOT NULL,
+  `emailid` varchar(45) NOT NULL,
+  `DOB` datetime NOT NULL,
+  `Gender` varchar(45) NOT NULL,
+  `ExtraWorkingHours` int(10) unsigned NOT NULL,
+  `OnLeaveContactAddress` varchar(45) NOT NULL,
+  `OnleaveContactNo` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`CompID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+INSERT INTO `applicant` (`CompID`,`Name`,`Designation`,`DeptiD`,`LeaveID`,`ProjectID`,`ContactNo`,`Address`,`emailid`,`DOB`,`Gender`,`ExtraWorkingHours`,`OnLeaveContactAddress`,`OnleaveContactNo`) VALUES 
+ (1,'antra','Engineer','1','101','201',9876543,'abc,jaipur','pqr@xyz.com','2012-12-12 00:00:00','female',12,'xyz,ajmer',7865342);
+CREATE TABLE `applicantlogin` (
+  `compid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`compid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+INSERT INTO `applicantlogin` (`compid`,`password`) VALUES 
+ (1,'1'),
+ (2,'2'),
+ (3,'3'),
+ (4,'4'),
+ (5,'5'),
+ (6,'6');
+CREATE TABLE `approve` (
+  `compid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`compid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+INSERT INTO `approve` (`compid`) VALUES 
+ (1),
+ (3),
+ (6);
+CREATE TABLE `department` (
+  `DeptID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `DeptName` varchar(45) NOT NULL,
+  `NoOfEmployees` int(20) unsigned NOT NULL,
+  PRIMARY KEY (`DeptID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `leave` (
+  `LeaveID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `CompID` int(10) unsigned NOT NULL,
+  `Type` varchar(45) NOT NULL,
+  `NoOfDays` int(10) unsigned NOT NULL,
+  `Reason` varchar(200) NOT NULL,
+  PRIMARY KEY (`LeaveID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `leave_application` (
+  `compid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `deptid` int(10) unsigned NOT NULL,
+  `dept` varchar(45) NOT NULL,
+  `noofdays` int(10) unsigned NOT NULL,
+  `reason` varchar(45) NOT NULL,
+  `projectname` varchar(45) NOT NULL,
+  `projectleader` varchar(45) NOT NULL,
+  `progress` varchar(45) NOT NULL,
+  `subsassigned` varchar(45) NOT NULL,
+  `extraworkhrs` int(10) unsigned NOT NULL,
+  `leavetype` varchar(45) NOT NULL,
+  PRIMARY KEY (`compid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+INSERT INTO `leave_application` (`compid`,`name`,`deptid`,`dept`,`noofdays`,`reason`,`projectname`,`projectleader`,`progress`,`subsassigned`,`extraworkhrs`,`leavetype`) VALUES 
+ (3,'riya',102,'CS',2,'ILLNESS','minor project','antra','designing','anushree',12,'CL'),
+ (4,'Anuroop Nag',104,'IT',6,'ILLNESS','major','antra','SRS','anushree',12,'PL'),
+ (5,'bhanu',101,'EC',7,'ILLNESS','training','akshay','testing','antra',6,'medical');
+CREATE TABLE `leave_left` (
+  `compid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `PL` int(10) unsigned NOT NULL,
+  `CL` int(10) unsigned NOT NULL,
+  `Medical` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`compid`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+INSERT INTO `leave_left` (`compid`,`PL`,`CL`,`Medical`) VALUES 
+ (1,20,20,20),
+ (2,20,20,20),
+ (3,19,16,34),
+ (4,15,16,15),
+ (5,15,17,17),
+ (10,16,16,17);
+CREATE TABLE `login` (
+  `UserID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Username` varchar(45) NOT NULL,
+  `Password` varchar(45) NOT NULL,
+  `Name` varchar(45) NOT NULL,
+  `CompID` int(10) unsigned NOT NULL,
+  `Designation` varchar(45) NOT NULL,
+  `ContactNo` int(20) unsigned NOT NULL,
+  `Address` varchar(100) NOT NULL,
+  `emailid` varchar(45) NOT NULL,
+  `Gender` varchar(45) NOT NULL,
+  `DOB` datetime NOT NULL,
+  PRIMARY KEY (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `projectleader_notification` (
+  `CompID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ApplicantName` varchar(45) NOT NULL,
+  `Designation` varchar(45) NOT NULL,
+  `ContactNo` int(10) unsigned NOT NULL,
+  `emailid` varchar(45) NOT NULL,
+  `ProjectID` int(20) unsigned NOT NULL,
+  `ProjectName` varchar(45) NOT NULL,
+  `Descrption` varchar(200) NOT NULL,
+  `Deadline` datetime NOT NULL,
+  `SubstituteAssigned` varchar(45) NOT NULL,
+  PRIMARY KEY (`CompID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `proof` (
+  `ProofID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `CompID` varchar(45) NOT NULL,
+  `Type` varchar(45) NOT NULL,
+  `FileName` varchar(45) NOT NULL,
+  `Location` varchar(45) NOT NULL,
+  PRIMARY KEY (`ProofID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `reject` (
+  `compid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`compid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+INSERT INTO `reject` (`compid`) VALUES 
+ (3),
+ (6);
+CREATE TABLE `status` (
+  `CompID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ProjectLeader_Status` varchar(45) NOT NULL,
+  `Admin_Status` varchar(45) NOT NULL,
+  PRIMARY KEY (`CompID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT;
+SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS;
+SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
